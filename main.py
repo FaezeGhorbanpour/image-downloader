@@ -42,6 +42,10 @@ def download_image(i, url, path):
     if url:
         try:
             r = requests.get(url, stream=True)
+            if r.status_code == 403:
+                headers = {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36'}  # This is chrome, you can set whatever browser you like
+                r = requests.get(url, stream=True, headers=headers)
             if r.status_code == 200:
                 if 'instagram' in url:
                     url = insta_downloader(url)
